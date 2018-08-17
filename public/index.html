@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+
+<!--HTML and CSS for SimpleWebApp2-->
+
+<html>
+    <head>
+        <title>LocalLine Demo</title>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <style>
+            html { height: 100%;
+                   width: 100%; }
+            body { background-color: #f6f6f6; 
+                   height: 100%; 
+                   width: 100%; }
+            
+            /* Main List */
+            
+            .customersContainer { background-color: #f6f6f6;
+                                  margin-top: 10px;
+                                  margin-right: 15px;
+                                 border: 1px solid #e0e0e0;
+                                 border-radius: 6px; 
+                                 overflow: hidden; 
+                                 box-shadow: 1px 1px 3px #e0e0e0; }
+            .customersHeader { background-color: #f6f6f6; 
+                              color: #6dc39d; 
+                              font-size: 17px; 
+                              font-family: arial narrow, arial, sans-serif;
+                              height: 59px;
+                              display: flex;
+                              align-items: center; 
+                              justify-content: space-between; }
+            .customersHeader span { margin: 0px; padding-left: 25px; }
+            
+            .customerAddButton { border: 1px solid #41b380; margin-right: 20px; 
+                                 display: flex; align-items: center; 
+                                 width: 180px; height: 37px; border-radius: 4px; }
+            .customerAddButton span { margin: 0px; }
+            
+            .customerListItem { background-color: white;
+                                height: 59px;
+                                border-top: 1px solid #e0e0e0;
+                                align-items: center;
+                                display: flex; 
+                                justify-content: space-between; }
+            .customerListItemInfo { font-family: arial, sans-serif;
+                                 display: flex; 
+                                 flex-direction: column; }                                
+            .customerListItemInfo span { margin: 0px; 
+                                      padding-left: 21px; }
+            .customerListItemName { color: #444444; font-size: 14px; }
+            .customerListItemLocation { color: #bbbbbb; font-size: 12px; }
+            .customerListItemActions { display: flex; 
+                                       flex-direction: row; 
+                                       align-items: center; 
+                                       margin-right: 22px; }
+            
+            .customerViewButton { height: 37px;
+                                  width: 66px; 
+                                  background-color: #41b380; 
+                                  border-radius: 4px; 
+                                  font-family: arial narrow, arial, sans-serif; 
+                                  display: flex; 
+                                  justify-content: center; 
+                                  align-items: center; 
+                                  margin-right: 7px;
+                                  cursor: pointer; }                           
+            .customerViewButton span { color: white;
+                                       margin: 0px;
+                                       font-size: 15px; }
+            .customerDeleteButton { margin-top: 2px; cursor: pointer; }
+            .customersFooter { background-color: white; 
+                               height: 68px; 
+                               border-top: 1px solid #e0e0e0; 
+                               display: flex; 
+                               align-items: center; 
+                               justify-content: flex-end; }
+            .footerSquare { height: 24px; width: 24px;
+                            border: 1px solid #e0e0e0; 
+                            border-radius: 4px; 
+                            overflow: hidden;
+                            margin-left: 14px; }
+            
+            /* Dialog */
+            
+            .dialogButton button { color: #41b830; }
+            #customerDeleteDialog { display: flex; 
+                                    flex-direction: row; }
+            #customerDeleteDialog span { font-family: arial, sans-serif; }
+            #customerDetailsDialog {}
+            #customerDetailsContent { display: flex; 
+                                    flex-direction: row; 
+                                    border-top: 1px solid #e0e0e0;
+                                    border-bottom: 1px solid #e0e0e0;
+                                    padding-bottom: 10px; }
+            #customerDetailsLeft { width: 250px }
+            #customerDetailsRight { width: 250px;
+                                    margin-left: 16px; }
+            
+            .dialogRow { display: flex; 
+                         flex-direction: column; }
+            .customerDetailsSectionHeader { border-bottom: 2px solid #ababab; 
+                                            font-size: small;
+                                            font-family: arial narrow, arial, sans-serif;
+                                            color: #ababab; 
+                                            margin-top: 10px; }
+            .catalogMenu { border: 2px solid #f6f6f6;
+                           border-radius: 4px; 
+                           font-size: small; 
+                           margin-top: 2px;
+                           margin-bottom: 2px; }
+            .sendCatalog { background-color: #41b380;
+                           border-radius: 4px; 
+                           color: white;
+                           padding-top: 10px;
+                           padding-bottom: 10px;
+                           padding-left: 82px;
+                           padding-right: 82px;
+                           font-family: arial narrow, arial, sans-serif; 
+                           font-size: small; 
+                           margin-top: 15px; }
+            .addNote { background-color: #3c2e67;
+                           border-radius: 4px;
+                           color: white;
+                           padding-top: 10px;
+                           padding-bottom: 10px;
+                           padding-left: 96px;
+                           padding-right: 96px;
+                           font-family: arial narrow, arial, sans-serif; 
+                           font-size: small; 
+                           margin-top: 20px; }
+            .custDetTextField { font-weight: bold;
+                                font-family: arial, sans-serif; 
+                                font-size: 16px; }
+        </style>
+        
+        
+        <!--Links to external libraries -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+        
+        <!--Links to javascript files in project-->
+        <script src="js/controllers/main.js"></script>
+	<script src="js/services/util.js"></script>
+        <script src="js/core.js"></script>
+    </head>
+    <body ng-app="simpWebApp2" ng-controller="simpController">
+        
+        <!--MAIN LIST VIEW-->
+        <div class="customersContainer">
+            <div class="customersHeader">
+                <span>MY CUSTOMERS</span>
+            </div>
+            <div class="customerListItem" ng-repeat="customer in customers">
+                <div class="customerListItemInfo">
+                    <span class="customerListItemName">{{ customer.business_name }}</span>
+                    <span class="customerListItemLocation">{{ customer.city }}, {{ customer.province }}</span>
+                </div>
+                <div class="customerListItemActions">
+                    <div class="customerViewButton" ng-click="openCustomerDetails(customer)">
+                        <span>VIEW</span>
+                    </div>
+                    <div class="customerDeleteButton">
+                        <img src="./images/littleroundx.png" ng-click="deleteCustomer(customer)" alt="delete customer" width="20" height="20">
+                    </div>
+                </div>
+            </div>
+            <div class="customersFooter">
+                <div class="footerSquare">
+                    <img src="./images/footerprevpage.png" alt="number one" width="24" height="24">
+                </div>
+                <div class="footerSquare" style="background-color: #d7d7d7;">
+                    <img src="./images/footerpagenum.png" alt="number one" width="24" height="24">
+                </div>
+                <div class="footerSquare" style="margin-right: 23px;">
+                    <img src="./images/footernextpage.png" alt="number one" width="24" height="24">
+                </div>
+            </div>
+        </div>
+        
+        <!--DIALOG-->
+        <div id="customerDetailsDialog">
+            <div id="customerDetailsContent">
+                <div id="customerDetailsLeft">
+                    <div class="dialogRow">
+                        <div class="customerDetailsSectionHeader">LOCATION</div>
+                        <div class="custDetTextField" id="custDetLocation">test</div>
+                    </div>
+                    <div class="dialogRow">
+                        <div class="customerDetailsSectionHeader">ITEM COLLECTION</div>
+                        <div>
+                            <div class="catalogMenu">Select an item</div>
+                        </div>
+                    </div>
+                    <div class="dialogRow">
+                        <div style="display: flex; align-content: center; justify-content: center;">
+                            <div class="sendCatalog">SEND ITEM</div>
+                        </div>
+                    </div>
+                    <div class="dialogRow">
+                        <div class="customerDetailsSectionHeader">AVERAGE ORDER</div>
+                        <div class="custDetTextField" id="custDetAvOrder">test</div>
+                    </div>
+                    <div class="dialogRow">
+                        <div class="customerDetailsSectionHeader">MONTHLY SALES</div>
+                        <div class="custDetTextField">$0.01</div>
+                    </div>
+                </div>
+                <div id="customerDetailsRight">
+                    <div class="dialogRow">
+                        <div class="customerDetailsSectionHeader">PHONE</div>
+                        <div class="custDetTextField">(123) 456-7890</div>
+                    </div>
+                    <div class="dialogRow">
+                        <div class="customerDetailsSectionHeader">LAST DELIVERY</div>
+                        <div class="custDetTextField" id="custDetLastDel">test</div>
+                    </div>
+                    <div class="dialogRow">
+                        <div style="display: flex; align-content: center; justify-content: center;">
+                            <div class="addNote">ADD TEXT</div>
+                        </div>
+                    </div>
+                    <div class="dialogRow">
+                        <div class="customerDetailsSectionHeader">MONTHLY ORDERS</div>
+                        <div class="custDetTextField" id="custDetTotOrders">test</div>
+                    </div>
+                    <div class="dialogRow">
+                        <div class="customerDetailsSectionHeader">TOTAL SALES</div>
+                        <div class="custDetTextField">$0.01</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="customerDeleteDialog" title="Delete Customer"><span>Are you sure you want to delete this customer?</span></div>
+        
+    </body>
+</html>
